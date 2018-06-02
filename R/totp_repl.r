@@ -38,9 +38,7 @@ runauth = function()
   choice = as.integer(choice)
   
   cat("\n")
-  
-  if (choice < length(choices))
-    auth(choices_verbose[choice])
+  auth(choices_verbose[choice])
   
   invisible(NULL)
 }
