@@ -2,6 +2,9 @@
 #' 
 #' Interactive authenticator interface.
 #' 
+#' @details
+#' TODO
+#' 
 #' @export
 runauth = function()
 {

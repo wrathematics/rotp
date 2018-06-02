@@ -16,6 +16,9 @@ err_handler = function(expr)
 #' 
 #' Interactive interface for the secret key database.
 #' 
+#' @details
+#' TODO
+#' 
 #' @export
 rundb = function()
 {
