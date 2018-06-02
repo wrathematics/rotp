@@ -1,0 +1,7 @@
+CPPOTP_OBJS = libcppotp/bytes.o libcppotp/otp.o libcppotp/sha1.o
+R_OBJS = totp.o
+
+
+OBJECTS = $(R_OBJS) $(CPPOTP_OBJS)
+all: $(SHLIB)
+$(SHLIB): $(OBJECTS) 
