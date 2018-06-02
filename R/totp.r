@@ -44,7 +44,7 @@ auth = function(name)
     {
       # cat('\r', paste0(p_str, " (", rem, " seconds remaining) "))
       cat('\r', paste0(p_str, " (", sprintf("%2d", rem), " seconds remaining ", progress_bar(rem), ") "))
-      flush.console()
+      utils::flush.console()
       rem = rem - 1L
       Sys.sleep(1)
     }

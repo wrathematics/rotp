@@ -20,7 +20,7 @@ runauth = function()
   choices_verbose = names
   choices = 1:length(choices_verbose)
   
-  flush.console()
+  utils::flush.console()
   cat("Pick a key or enter Q/q to exit:\n")
   cat(" ", paste(choices, choices_verbose, sep=" - ", collapse="\n  "), "\n")
   

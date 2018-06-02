@@ -31,7 +31,7 @@ rundb = function()
   
   while (TRUE)
   {
-    flush.console()
+    utils::flush.console()
     cat("Choose an operation (Q/q to quit):\n")
     cat(" ", paste(choices, choices_verbose, sep=" - ", collapse="    "), "\n")
     
