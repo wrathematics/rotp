@@ -10,6 +10,7 @@ Imports:
     getPass (>= 0.2.2),
     openssl (>= 0.9.7),
     utils
+SystemRequirements: C++11
 ByteCompile: yes
 Authors@R: c(person("Drew", "Schmidt", role=c("aut", "cre"), email="wrathematics@gmail.com"))
 URL: https://github.com/wrathematics/rotp

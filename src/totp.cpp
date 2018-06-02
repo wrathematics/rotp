@@ -1,7 +1,9 @@
-#include "rstuff.h"
+#include <cstdint>
+#include <ctime>
 
 #include "libcppotp/bytes.h"
 #include "libcppotp/otp.h"
+#include "rstuff.h"
 
 using namespace CppTotp;
 
