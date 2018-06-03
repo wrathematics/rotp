@@ -9,6 +9,7 @@
 runauth = function()
 {
   check.is.interactive()
+  check.has.pubkey()
   
   prompt = "$ "
   

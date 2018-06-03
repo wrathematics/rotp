@@ -23,6 +23,7 @@ err_handler = function(expr)
 rundb = function()
 {
   check.is.interactive()
+  check.has.pubkey()
   
   prompt = "$ "
   
