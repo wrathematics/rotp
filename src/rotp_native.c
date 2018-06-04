@@ -5,10 +5,10 @@
 #include <R_ext/Rdynload.h>
 #include <stdlib.h>
 
-extern SEXP R_totp(SEXP key_);
+extern SEXP R_totp(SEXP key_, SEXP interval, SEXP plen);
 
 static const R_CallMethodDef CallEntries[] = {
-  {"R_totp", (DL_FUNC) &R_totp, 1},
+  {"R_totp", (DL_FUNC) &R_totp, 3},
   {NULL, NULL, 0}
 };
 

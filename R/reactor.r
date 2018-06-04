@@ -46,6 +46,28 @@ check.is.string = function(x)
   invisible(TRUE)
 }
 
+check.is.natnum = function(x)
+{
+  if (!is.numeric(x) || is.annoying(x) || !is.inty(x) || is.negative(x))  
+  {
+    nm = deparse(substitute(x))
+    stop(paste0("argument '", nm, "' must be a natural number (0 or positive integer)"), call.=FALSE)
+  }
+  
+  invisible(TRUE)
+}
+
+check.is.posint = function(x)
+{
+  if (is.posint(x))
+  {
+    nm = deparse(substitute(x))
+    stop(paste0("argument '", nm, "' must be a positive integer"), call.=FALSE)
+  }
+  
+  invisible(TRUE)
+}
+
 check.is.flag = function(x)
 {
   if (!is.flag(x))

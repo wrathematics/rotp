@@ -7,9 +7,6 @@
 
 using namespace CppTotp;
 
-#define INTERVAL  30
-#define KEYLEN    6
-
 
 static inline std::string normalizedBase32String(const std::string & unnorm)
 {
@@ -38,7 +35,7 @@ static inline std::string normalizedBase32String(const std::string & unnorm)
 
 
 
-extern "C" SEXP R_totp(SEXP key_)
+extern "C" SEXP R_totp(SEXP key_, SEXP interval, SEXP plen)
 {
   SEXP ret;
   const char *const key = CHARPT(key_, 0);
@@ -48,7 +45,7 @@ extern "C" SEXP R_totp(SEXP key_)
   std::string normalizedKey = normalizedBase32String(key);
   Bytes::ByteString qui = Bytes::fromUnpaddedBase32(normalizedKey);
 
-  uint32_t p = totp(qui, time(NULL), 0, INTERVAL, KEYLEN);
+  uint32_t p = totp(qui, time(NULL), 0, INTEGER(interval)[0], INTEGER(plen)[0]);
   
   INTEGER(ret)[0] = p;
   

@@ -5,9 +5,64 @@ get_time_rem = function(interval=30L)
 
 
 
-totp = function(key)
+ndigits = function(n)
 {
-  .Call(R_totp, key)
+  as.integer(log10(n)) + 1L
+}
+
+
+
+hotp = function(key)
+{
+  
+}
+
+
+
+totp_wrapper = function(key, interval=30L, plen=6L)
+{
+  .Call(R_totp, key, interval, plen)
+}
+
+
+
+#' totp
+#' 
+#' TODO
+#' 
+#' @details
+#' TODO sha1 etc
+#' 
+#' @param key
+#' TODO
+#' @param interval
+#' TODO
+#' @param plen
+#' TODO
+#' 
+#' @return
+#' An integer with \code{plen} digits.
+#' 
+#' @examples
+#' library(rotp)
+#' 
+#' totp("asdf")
+#' totp("asdf, interval=15, plen=3")
+#' 
+#' @export
+totp = function(key, interval=30L, plen=6L)
+{
+  check.is.string(key)
+  check.is.posint(interval)
+  check.is.posint(plen)
+  
+  if (ndigits(plen) > 10)
+    stop("plen too large")
+  
+  interval = as.integer(interval)
+  plen = as.integer(plen)
+  
+  totp_wrapper(key, interval, plen)
 }
 
 
@@ -37,7 +92,7 @@ auth = function(name)
   while (TRUE)
   {
     rem = get_time_rem()
-    p = totp(key)
+    p = totp_wrapper(key)
     p_str = sprintf("%06d", p)
     
     while (rem > 0)
