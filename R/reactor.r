@@ -33,6 +33,12 @@ is.flag = function(x)
   is.logical(x) && !is.annoying(x)
 }
 
+is.posint = function(x)
+{
+  is.numeric(x) && !is.annoying(x) && is.inty(x) && !is.negative(x) && !is.zero(x)
+}
+
+
 
 
 check.is.string = function(x)
@@ -43,6 +49,17 @@ check.is.string = function(x)
     stop(paste0("argument '", nm, "' must be a single string"), call.=FALSE)
   }
 	
+  invisible(TRUE)
+}
+
+check.is.inty = function(x)
+{
+  if (is.annoying(x) && !is.inty(x))
+  {
+    nm = deparse(substitute(x))
+    stop(paste0("argument '", nm, "' must be an integer"), call.=FALSE)
+  }
+  
   invisible(TRUE)
 }
 
@@ -59,7 +76,7 @@ check.is.natnum = function(x)
 
 check.is.posint = function(x)
 {
-  if (is.posint(x))
+  if (!is.posint(x))
   {
     nm = deparse(substitute(x))
     stop(paste0("argument '", nm, "' must be a positive integer"), call.=FALSE)
