@@ -1,4 +1,31 @@
-#' runauth
+auth_from_key = function(key)
+{
+  cat("\nCtrl+c to exit\n")
+  
+  while (TRUE)
+  {
+    rem = get_remaining_time()
+    p = totp_wrapper(key)
+    p_str = sprintf("%06d", p)
+    
+    while (rem > 0)
+    {
+      cat('\r', paste0(p_str, " (", sprintf("%2d", rem), " seconds remaining ", progress_bar(rem), ") "))
+      utils::flush.console()
+      rem = rem - 1L
+      Sys.sleep(1)
+    }
+  }
+  
+  rm(key)
+  invisible(gc(verbose=FALSE, reset=TRUE))
+  
+  invisible(NULL)
+}
+
+
+
+#' auth
 #' 
 #' Interactive authenticator interface.
 #' 
@@ -6,7 +33,7 @@
 #' TODO
 #' 
 #' @export
-runauth = function()
+auth = function()
 {
   check.is.interactive()
   check.has.pubkey()
@@ -37,9 +64,9 @@ runauth = function()
     return(invisible())
   
   choice = as.integer(choice)
-  
-  cat("\n")
-  auth(choices_verbose[choice])
+  name = choices_verbose[choice]
+  key = decrypt(db_getkey(name)$encrypted_key)
+  auth_from_key(key)
   
   invisible(NULL)
 }

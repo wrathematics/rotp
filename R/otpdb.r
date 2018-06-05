@@ -12,7 +12,7 @@ err_handler = function(expr)
 
 
 
-#' rundb
+#' otpdb
 #' 
 #' Interactive interface for the secret key database.
 #' 
@@ -20,7 +20,7 @@ err_handler = function(expr)
 #' TODO
 #' 
 #' @export
-rundb = function()
+otpdb = function()
 {
   check.is.interactive()
   check.has.pubkey()
@@ -118,7 +118,7 @@ rundb = function()
       if (identical(sure, "YES"))
       {
         cat("Clearing database...")
-        # would be amusing to add something like Sys.sleep(5) here
+        # NOTE would be amusing to add something like Sys.sleep(5) here
         db_clear()
         cat("ok!\n")
       }

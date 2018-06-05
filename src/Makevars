@@ -1,7 +1,7 @@
 CXX_STD = CXX11
 
 CPPOTP_OBJS = libcppotp/bytes.o libcppotp/otp.o libcppotp/sha1.o
-R_OBJS = rotp_native.o totp.o
+R_OBJS = rotp_native.o otp.o
 
 
 OBJECTS = $(R_OBJS) $(CPPOTP_OBJS)

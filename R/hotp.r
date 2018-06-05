@@ -1,11 +1,11 @@
-totp_wrapper = function(key, interval=30L, digits=6L)
+hotp_wrapper = function(key, counter, digits=6L)
 {
-  .Call(R_totp, key, interval, digits)
+  .Call(R_hotp, key, counter, digits)
 }
 
 
 
-#' totp
+#' hotp
 #' 
 #' TODO
 #' 
@@ -14,7 +14,7 @@ totp_wrapper = function(key, interval=30L, digits=6L)
 #' 
 #' @param key
 #' TODO
-#' @param interval
+#' @param counter
 #' TODO
 #' @param digits
 #' TODO
@@ -25,21 +25,20 @@ totp_wrapper = function(key, interval=30L, digits=6L)
 #' @examples
 #' library(rotp)
 #' 
-#' totp("asdf")
-#' totp("asdf, interval=15, digits=3")
+#' totp("asdf", 10, digits=3L)
 #' 
 #' @export
-totp = function(key, interval=30L, digits=6L)
+hotp = function(key, counter, digits=6L)
 {
   check.is.string(key)
-  check.is.posint(interval)
+  check.is.inty(counter)
   check.is.posint(digits)
   
   if (ndigits(digits) > 10)
     stop("argument 'digits' too large")
   
-  interval = as.integer(interval)
+  counter = as.integer(counter)
   digits = as.integer(digits)
   
-  totp_wrapper(key, interval, digits)
+  hotp_wrapper(key, counter, digits)
 }
