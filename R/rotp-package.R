@@ -2,7 +2,7 @@
 #' 
 #' TODO
 #' 
-#' @useDynLib rotp R_totp
+#' @useDynLib rotp R_hotp R_totp
 #' 
 #' @name rotp-package
 #' @docType package

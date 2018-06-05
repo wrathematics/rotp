@@ -12,16 +12,56 @@ ndigits = function(n)
 
 
 
-hotp = function(key)
+hotp_wrapper = function(key, counter, digits=6L)
 {
-  
+  .Call(R_hotp, key, counter, digits)
 }
 
 
 
-totp_wrapper = function(key, interval=30L, plen=6L)
+#' hotp
+#' 
+#' TODO
+#' 
+#' @details
+#' TODO sha1 etc
+#' 
+#' @param key
+#' TODO
+#' @param counter
+#' TODO
+#' @param digits
+#' TODO
+#' 
+#' @return
+#' An integer with \code{digits} digits.
+#' 
+#' @examples
+#' library(rotp)
+#' 
+#' totp("asdf", 10, digits=3L)
+#' 
+#' @export
+hotp = function(key, counter, digits=6L)
 {
-  .Call(R_totp, key, interval, plen)
+  check.is.string(key)
+  check.is.inty(counter)
+  check.is.posint(digits)
+  
+  if (ndigits(digits) > 10)
+    stop("argument 'digits' too large")
+  
+  counter = as.integer(counter)
+  digits = as.integer(digits)
+  
+  hotp_wrapper(key, counter, digits)
+}
+
+
+
+totp_wrapper = function(key, interval=30L, digits=6L)
+{
+  .Call(R_totp, key, interval, digits)
 }
 
 
@@ -37,32 +77,32 @@ totp_wrapper = function(key, interval=30L, plen=6L)
 #' TODO
 #' @param interval
 #' TODO
-#' @param plen
+#' @param digits
 #' TODO
 #' 
 #' @return
-#' An integer with \code{plen} digits.
+#' An integer with \code{digits} digits.
 #' 
 #' @examples
 #' library(rotp)
 #' 
 #' totp("asdf")
-#' totp("asdf, interval=15, plen=3")
+#' totp("asdf, interval=15, digits=3")
 #' 
 #' @export
-totp = function(key, interval=30L, plen=6L)
+totp = function(key, interval=30L, digits=6L)
 {
   check.is.string(key)
   check.is.posint(interval)
-  check.is.posint(plen)
+  check.is.posint(digits)
   
-  if (ndigits(plen) > 10)
-    stop("plen too large")
+  if (ndigits(digits) > 10)
+    stop("argument 'digits' too large")
   
   interval = as.integer(interval)
-  plen = as.integer(plen)
+  digits = as.integer(digits)
   
-  totp_wrapper(key, interval, plen)
+  totp_wrapper(key, interval, digits)
 }
 
 
