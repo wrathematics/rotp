@@ -24,11 +24,10 @@ hotp_wrapper = function(key, counter, digits=6L)
 #' 
 #' @examples
 #' library(rotp)
-#' 
-#' totp("asdf", 10, digits=3L)
+#' totp("asdf", 10, digits=8)
 #' 
 #' @export
-hotp = function(key, counter, digits=6L)
+hotp = function(key, counter, digits=6)
 {
   check.is.string(key)
   check.is.inty(counter)

@@ -26,10 +26,10 @@ totp_wrapper = function(key, interval=30L, digits=6L)
 #' library(rotp)
 #' 
 #' totp("asdf")
-#' totp("asdf, interval=15, digits=3")
+#' totp("asdf", interval=15, digits=8)
 #' 
 #' @export
-totp = function(key, interval=30L, digits=6L)
+totp = function(key, interval=30, digits=6)
 {
   check.is.string(key)
   check.is.posint(interval)
