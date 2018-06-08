@@ -1,8 +1,11 @@
 Package: rotp
 Type: Package
-Title: TODO
+Title: One-Time Password 'Authenticators'
 Version: 1.0-0
-Description: TODO
+Description: Time-based One-Time Password (TOTP) is a relatively common 2-factor
+    scheme, with Google 'Authenticator' being a well-known implementation. This
+    provides the same technique for R together with an encrypted database
+    schema.
 License: BSD 2-clause License + file LICENSE
 Depends:
     R (>= 3.1.0)
