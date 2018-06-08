@@ -1,8 +1,8 @@
 # rotp
 
 * **Version:** 1.0-0
-* **URL**: https://github.com/RBigData/rotp
-* **Status:** [![Build Status](https://travis-ci.org/RBigData/rotp.png)](https://travis-ci.org/RBigData/rotp)
+* **URL**: https://github.com/wrathematics/rotp
+* **Status:** [![Build Status](https://travis-ci.org/wrathematics/rotp.png)](https://travis-ci.org/wrathematics/rotp)
 * **License:** [BSD 2-Clause](http://opensource.org/licenses/BSD-2-Clause)
 * **Author:** Drew Schmidt
 

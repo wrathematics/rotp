@@ -1,2 +1,11 @@
 language: R
 warnings_are_errors: true
+cache: packages
+sudo: required
+
+before_install:
+  - sudo apt-get install -y libssl-dev
+
+r_packages:
+  - openssl
+  - getPass
