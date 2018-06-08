@@ -14,11 +14,18 @@ err_handler = function(expr)
 
 #' otpdb
 #' 
-#' Interactive interface for the secret key database.
+#' Interactive interface for the secret key database. After setting up your
+#' keys using this interface, you can authenticate with \code{auth()}.
 #' 
 #' @details
-#' TODO
+#' The database is located at \code{~/.rotpdb}. On Windows, this will be on your
+#' "My Documents" folder.
 #' 
+#' Secret keys are encrypted using envelope encryption. You will need an RSA key
+#' which the openssl package can find. You can check for your keypair via
+#' \code{openssl::my_pubkey()}.
+#' 
+#' @seealso \code{\link{auth}}
 #' @export
 otpdb = function()
 {

@@ -7,25 +7,22 @@ hotp_wrapper = function(key, counter, digits=6L)
 
 #' hotp
 #' 
-#' TODO
-#' 
-#' @details
-#' TODO sha1 etc
+#' Implementation of the HMAC-based One-Time Password algorithm.
 #' 
 #' @param key
-#' TODO
+#' The secret key.
 #' @param counter
-#' TODO
+#' A "counter" (some integer).
 #' @param digits
-#' TODO
+#' The number of digits of the return.
 #' 
 #' @return
 #' An integer with \code{digits} digits.
 #' 
 #' @examples
-#' library(rotp)
-#' totp("asdf", 10, digits=8)
+#' rotp::totp("asdf", 10)
 #' 
+#' @references \url{https://en.wikipedia.org/wiki/HMAC-based_One-time_Password_algorithm}
 #' @export
 hotp = function(key, counter, digits=6)
 {

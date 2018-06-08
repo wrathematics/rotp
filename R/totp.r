@@ -7,27 +7,22 @@ totp_wrapper = function(key, interval=30L, digits=6L)
 
 #' totp
 #' 
-#' TODO
-#' 
-#' @details
-#' TODO sha1 etc
+#' Implementation of the Time-based One-Time Password algorithm.
 #' 
 #' @param key
-#' TODO
+#' The secret key.
 #' @param interval
-#' TODO
+#' The interval of time in seconds.
 #' @param digits
-#' TODO
+#' The number of digits of the return.
 #' 
 #' @return
 #' An integer with \code{digits} digits.
 #' 
 #' @examples
-#' library(rotp)
+#' rotp::totp("asdf")
 #' 
-#' totp("asdf")
-#' totp("asdf", interval=15, digits=8)
-#' 
+#' @references \url{https://en.wikipedia.org/wiki/Time-based_One-time_Password_algorithm}
 #' @export
 totp = function(key, interval=30, digits=6)
 {

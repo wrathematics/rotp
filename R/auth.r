@@ -27,11 +27,16 @@ auth_from_key = function(key)
 
 #' auth
 #' 
-#' Interactive authenticator interface.
+#' Interactive authenticator interface. Similar in scope to Google
+#' Authenticator. To use, you must first set up your database of keys
+#' using \code{otpdb()}.
 #' 
 #' @details
-#' TODO
+#' Only the requested database key will be decrypted in memory. Keys are never
+#' decrypted on disk.
 #' 
+#' @seealso \code{\link{otpdb}}
+#' @references \url{https://en.wikipedia.org/wiki/Google_Authenticator}
 #' @export
 auth = function()
 {
