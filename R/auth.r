@@ -48,28 +48,16 @@ auth = function()
   if (!file.exists(db_path()) || db_len() == 0)
     stop("No keys stored in db! Add some by first running otpdb()\n")
   else
-    names = db_list()
+    choices = db_list()
   
-  choices_verbose = names
-  choices = 1:length(choices_verbose)
   
   utils::flush.console()
-  cat("Pick a key or enter Q/q to exit:\n")
-  cat(" ", paste(choices, choices_verbose, sep=" - ", collapse="\n  "), "\n")
   
-  choice = getPass::getPass(prompt)
-  
-  while (choice != "Q" && choice != "q" && all(choice != choices))
-  {
-    cat("ERROR: please choose one of", paste(choices, collapse=", "), "\n")
-    choice = readline(prompt)
-  }
-  
+  choice = otpdb_getchoice(choices, prompt, "Pick a key or enter Q/q to exit", use_getPass=TRUE)
   if (choice == "Q" || choice == "q")
     return(invisible())
   
-  choice = as.integer(choice)
-  name = choices_verbose[choice]
+  name = choices[choice]
   key = decrypt(db_getkey(name)$encrypted_key)
   auth_from_key(key)
   

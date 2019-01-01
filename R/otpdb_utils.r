@@ -51,7 +51,7 @@ Create db file? (YES/no): ")
 
 
 
-otpdb_getchoice = function(choices, prompt, msg, long=TRUE)
+otpdb_getchoice = function(choices, prompt, msg, long=TRUE, use_getPass=FALSE)
 {
   choices_number = 1:length(choices)
   
@@ -63,12 +63,19 @@ otpdb_getchoice = function(choices, prompt, msg, long=TRUE)
   cat(paste0(msg, ":\n"))
   cat(" ", paste(choices_number, choices, sep=" - ", collapse=asdf), "\n")
   
-  choice = readline(prompt)
+  if (use_getPass)
+    choice = getPass::getPass(prompt)
+  else
+    choice = readline(prompt)
+  
   while (choice != "Q" && choice != "q" && all(choice != choices_number))
   {
     cat("ERROR: please choose one of", paste(choices_number, collapse=", "), "\n")
     choice = readline(prompt)
   }
+  
+  if (choice != "Q" && choice != "q")
+    choice = as.integer(choice)
   
   choice
 }
