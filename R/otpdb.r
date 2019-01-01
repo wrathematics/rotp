@@ -12,10 +12,25 @@ err_handler = function(expr)
 
 
 
+otpdb_confirm = function(msg)
+{
+  cat(msg)
+  choice = readline()
+  
+  if (choice == "YES")
+    TRUE
+  else
+    FALSE
+}
+
+
+
 otpdb_init = function()
 {
   db = db_path()
-  if (!file.exists(db))
+  if (file.exists(db))
+    TRUE
+  else
   {
     msg = paste0(
 "To use the package, we need to create a persistent key database file. This file
@@ -25,19 +40,13 @@ To proceed, enter YES (all caps). Entering anything else will halt the
 application.
 
 Create db file? (YES/no): ")
-    cat(msg)
-    choice = readline()
+    check = otpdb_confirm(msg)
     
-    if (choice == "YES")
-    {
+    if (isTRUE(check))
       db_init()
-      TRUE
-    }
-    else
-      FALSE
+    
+    check
   }
-  else
-    invisible(TRUE)
 }
 
 
@@ -68,14 +77,14 @@ otpdb = function()
   
   prompt = "$ "
   
-  choices_verbose = c("List", "Add key", "Delete key", "Sort keys", "Reset")
+  choices_verbose = c("List", "Add", "Delete", "Show", "Sort", "Reset", "Help")
   choices = 1:length(choices_verbose)
   
   while (TRUE)
   {
     utils::flush.console()
     cat("Choose an operation (Q/q to quit):\n")
-    cat(" ", paste(choices, choices_verbose, sep=" - ", collapse="    "), "\n")
+    cat(" ", paste(choices, choices_verbose, sep=" - ", collapse="   "), "\n")
     
     choice = readline(prompt)
     
@@ -103,7 +112,7 @@ otpdb = function()
     # ------------------------------------------------
     # Add key
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Add key")
+    else if (choices_verbose[choice] == "Add")
     {
       name = readline("Enter a name for the key: ")
       key = getPass::getPass("Enter the key: ")
@@ -114,7 +123,7 @@ otpdb = function()
     # ------------------------------------------------
     # Delete key
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Delete key")
+    else if (choices_verbose[choice] == "Delete")
     {
       test = err_handler({
         names = db_list()
@@ -136,16 +145,61 @@ otpdb = function()
       }
       
       if (choice == "Q" || choice == "q")
-        return(invisible())
+        return(invisible(TRUE))
       
       choice = as.integer(choice)
       name = names[choice]
       err_handler(db_delkey(name, names))
     }
     # ------------------------------------------------
+    # Show key
+    # ------------------------------------------------
+    else if (choices_verbose[choice] == "Show")
+    {
+      test = err_handler({
+        names = db_list()
+      })
+      if (!isTRUE(test))
+        next
+      
+      msg = paste0(
+"WARNING: this will show your private key in plain text. You normally do not
+need to do this unless you are, for example, migrating to a different OTP
+application. To authenticate with your bank or whatever, please instead use
+the rotp::auth() function.
+
+Show private key? (YES/no): ")
+      check = otpdb_confirm(msg)
+      if (!isTRUE(check))
+        next
+      
+      choices_names_verbose = names
+      choices_names = 1:length(choices_names_verbose)
+      
+      cat("Pick a key or enter Q/q to exit:\n")
+      cat(" ", paste(choices_names, choices_names_verbose, sep=" - ", collapse="\n  "), "\n")
+      
+      choice = readline(prompt)
+      while (choice != "Q" && choice != "q" && all(choice != choices_names))
+      {
+        cat("ERROR: please choose one of", paste(choices_names, collapse=", "), "\n")
+        choice = readline(prompt)
+      }
+      
+      if (choice == "Q" || choice == "q")
+        return(invisible(TRUE))
+      
+      choice = as.integer(choice)
+      name = names[choice]
+      
+      priv_key = decrypt(db_getkey(name)$encrypted_key)
+      cat(paste0("Private key: ", priv_key))
+      cat("\n")
+    }
+    # ------------------------------------------------
     # Sort keys
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Sort keys")
+    else if (choices_verbose[choice] == "Sort")
     {
       err_handler(db_sort())
     }
@@ -165,6 +219,34 @@ otpdb = function()
       }
       else
         cat("Reset aborted.\n")
+    }
+    # ------------------------------------------------
+    # Help
+    # ------------------------------------------------
+    else if (choices_verbose[choice] == "Help")
+    {
+      msg = 
+"1 - List
+    Show all key names in the db.
+2 - Add
+    Add a new key to the db. You will first give it an identifiable name (e.g.
+    'Bank of Blahblahblah'), and then enter the private key.
+3 - Delete
+    Remove a key from the db.
+4 - Show
+    View the private key. You should only need to do this if you are migrating
+    to a different authentication application. For authenticating with your
+    bank or sketchy Chinese crypto site, you should instead use the
+    rotp::auth() function.
+5 - Sort
+    Alphabetically sort the key names.
+6 - Reset
+    Remove all keys from the db.
+7 - Help
+    This menu.
+"
+      
+      cat(msg)
     }
     
     cat("\n")
