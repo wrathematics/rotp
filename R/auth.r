@@ -45,8 +45,8 @@ auth = function()
   
   prompt = "$ "
   
-  if (db_len() == 0)
-    stop("No keys stored in db! Add some by first running rundb()\n")
+  if (!file.exists(db_path()) || db_len() == 0)
+    stop("No keys stored in db! Add some by first running otpdb()\n")
   else
     names = db_list()
   

@@ -12,6 +12,36 @@ err_handler = function(expr)
 
 
 
+otpdb_init = function()
+{
+  db = db_path()
+  if (!file.exists(db))
+  {
+    msg = paste0(
+"To use the package, we need to create a persistent key database file. This file
+will be located at the path \"", db, "\".
+
+To proceed, enter YES (all caps). Entering anything else will halt the
+application.
+
+Create db file? (YES/no): ")
+    cat(msg)
+    choice = readline()
+    
+    if (choice == "YES")
+    {
+      db_init()
+      TRUE
+    }
+    else
+      FALSE
+  }
+  else
+    invisible(TRUE)
+}
+
+
+
 #' otpdb
 #' 
 #' Interactive interface for the secret key database. After setting up your
@@ -31,6 +61,10 @@ otpdb = function()
 {
   check.is.interactive()
   check.has.pubkey()
+  
+  check.db = otpdb_init()
+  if (!isTRUE(check.db))
+    return(invisible(FALSE))
   
   prompt = "$ "
   
@@ -135,4 +169,6 @@ otpdb = function()
     
     cat("\n")
   }
+  
+  invisible(TRUE)
 }
