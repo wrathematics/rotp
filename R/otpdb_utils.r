@@ -48,3 +48,27 @@ Create db file? (YES/no): ")
     check
   }
 }
+
+
+
+otpdb_getchoice = function(choices, prompt, msg, long=TRUE)
+{
+  choices_number = 1:length(choices)
+  
+  if (long)
+    asdf = "\n  "
+  else
+    asdf = "   "
+  
+  cat(paste0(msg, ":\n"))
+  cat(" ", paste(choices_number, choices, sep=" - ", collapse=asdf), "\n")
+  
+  choice = readline(prompt)
+  while (choice != "Q" && choice != "q" && all(choice != choices_number))
+  {
+    cat("ERROR: please choose one of", paste(choices_number, collapse=", "), "\n")
+    choice = readline(prompt)
+  }
+  
+  choice
+}

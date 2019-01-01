@@ -24,32 +24,22 @@ otpdb = function()
   
   prompt = "$ "
   
-  choices_verbose = c("List", "Add", "Delete", "Show", "Sort", "Reset", "Help")
-  choices = 1:length(choices_verbose)
+  choices = c("List", "Add", "Delete", "Show", "Sort", "Reset", "Help")
   
   while (TRUE)
   {
     utils::flush.console()
-    cat("Choose an operation (Q/q to quit):\n")
-    cat(" ", paste(choices, choices_verbose, sep=" - ", collapse="   "), "\n")
     
-    choice = readline(prompt)
-    
-    if (choice == "q" || choice == "Q")
+    choice = otpdb_getchoice(choices, prompt, "Choose an operation (Q/q to quit)", long=FALSE)
+    if (choice == "Q" || choice == "q")
       break
-    
-    while (all(choice != choices))
-    {
-      cat("ERROR: please choose one of", paste(choices, collapse=", "), "\n")
-      choice = readline(prompt)
-    }
     
     choice = as.integer(choice)
     
     # ------------------------------------------------
     # List
     # ------------------------------------------------
-    if (choices_verbose[choice] == "List")
+    if (choices[choice] == "List")
     {
       err_handler({
         names = db_list()
@@ -59,7 +49,7 @@ otpdb = function()
     # ------------------------------------------------
     # Add key
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Add")
+    else if (choices[choice] == "Add")
     {
       name = readline("Enter a name for the key: ")
       key = getPass::getPass("Enter the key: ")
@@ -70,7 +60,7 @@ otpdb = function()
     # ------------------------------------------------
     # Delete key
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Delete")
+    else if (choices[choice] == "Delete")
     {
       test = err_handler({
         names = db_list()
@@ -78,21 +68,10 @@ otpdb = function()
       if (!isTRUE(test))
         next
       
-      choices_names_verbose = names
-      choices_names = 1:length(choices_names_verbose)
-      
-      cat("Pick a key to DELETE or enter Q/q to exit:\n")
-      cat(" ", paste(choices_names, choices_names_verbose, sep=" - ", collapse="\n  "), "\n")
-      
-      choice = readline(prompt)
-      while (choice != "Q" && choice != "q" && all(choice != choices_names))
-      {
-        cat("ERROR: please choose one of", paste(choices_names, collapse=", "), "\n")
-        choice = readline(prompt)
-      }
+      otpdb_getchoice(names, prompt, "Pick a key to DELETE or enter Q/q to exit")
       
       if (choice == "Q" || choice == "q")
-        return(invisible(TRUE))
+        next
       
       choice = as.integer(choice)
       name = names[choice]
@@ -101,7 +80,7 @@ otpdb = function()
     # ------------------------------------------------
     # Show key
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Show")
+    else if (choices[choice] == "Show")
     {
       test = err_handler({
         names = db_list()
@@ -120,21 +99,10 @@ Show private key? (YES/no): ")
       if (!isTRUE(check))
         next
       
-      choices_names_verbose = names
-      choices_names = 1:length(choices_names_verbose)
-      
-      cat("Pick a key or enter Q/q to exit:\n")
-      cat(" ", paste(choices_names, choices_names_verbose, sep=" - ", collapse="\n  "), "\n")
-      
-      choice = readline(prompt)
-      while (choice != "Q" && choice != "q" && all(choice != choices_names))
-      {
-        cat("ERROR: please choose one of", paste(choices_names, collapse=", "), "\n")
-        choice = readline(prompt)
-      }
+      choice = otpdb_getchoice(names, prompt, "Pick a key to SHOW or enter Q/q to exit")
       
       if (choice == "Q" || choice == "q")
-        return(invisible(TRUE))
+        next
       
       choice = as.integer(choice)
       name = names[choice]
@@ -146,18 +114,18 @@ Show private key? (YES/no): ")
     # ------------------------------------------------
     # Sort keys
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Sort")
+    else if (choices[choice] == "Sort")
     {
       err_handler(db_sort())
     }
     # ------------------------------------------------
     # Reset
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Reset")
+    else if (choices[choice] == "Reset")
     {
       cat("This will remove all data in the db. Are you sure?\nType 'YES' to proceed, anything else to abort\n")
-      sure = readline(prompt)
-      if (identical(sure, "YES"))
+      check = readline(prompt)
+      if (identical(check, "YES"))
       {
         cat("Clearing database...")
         # NOTE would be amusing to add something like Sys.sleep(5) here
@@ -170,7 +138,7 @@ Show private key? (YES/no): ")
     # ------------------------------------------------
     # Help
     # ------------------------------------------------
-    else if (choices_verbose[choice] == "Help")
+    else if (choices[choice] == "Help")
     {
       msg = 
 "1 - List
