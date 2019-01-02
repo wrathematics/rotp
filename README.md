@@ -20,12 +20,9 @@ The hotp and totp implementations (directly accessible via `rotp::hotp()` and `r
 install.packages("rotp")
 ``` -->
 
-The development version is maintained on GitHub, and can easily be installed by any of the packages that offer installations from GitHub:
+The development version is maintained on GitHub:
 
 ```r
-### Pick your preference
-devtools::install_github("wrathematics/rotp")
-ghit::install_github("wrathematics/rotp")
 remotes::install_github("wrathematics/rotp")
 ```
 
