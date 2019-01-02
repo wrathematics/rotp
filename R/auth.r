@@ -53,7 +53,7 @@ auth = function()
   
   utils::flush.console()
   
-  choice = otpdb_getchoice(choices, prompt, "Pick a key or enter Q/q to exit", use_getPass=TRUE)
+  choice = otpdb_getchoice(choices, prompt, "Pick a key or enter Q/q to exit", mask=TRUE)
   if (choice == "Q" || choice == "q")
     return(invisible())
   

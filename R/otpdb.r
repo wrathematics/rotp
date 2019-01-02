@@ -99,7 +99,7 @@ Show private key? (YES/no): ")
       if (!isTRUE(check))
         next
       
-      choice = otpdb_getchoice(names, prompt, "Pick a key to SHOW or enter Q/q to exit")
+      choice = otpdb_getchoice(names, prompt, "Pick a key to SHOW or enter Q/q to exit", mask=TRUE)
       
       if (choice == "Q" || choice == "q")
         next
