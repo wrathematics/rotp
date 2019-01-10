@@ -24,18 +24,85 @@ The development version is maintained on GitHub:
 remotes::install_github("wrathematics/rotp")
 ```
 
+You will need a system installation of OpenSSL to build the package from source.
 
 
-## Package Usage
+
+## How to Use the Package
 
 You will need to have an ssh key that the openssl package can find (try `openssl::my_pubkey()`). If that works then:
 
 1. Set up your secret key database with `otpdb()`.
 2. Run the authenticator with `auth()`.
 
-You can also directly call the `hotp()` and `totp()` functions if you want.
+Each of these functions runs an interactive REPL for either managing keys (adding, deleting, ...) or getting one time passwords. You can also directly call the `hotp()` and `totp()` functions if you want.
 
 The database file is located at `~/.rotpdb`. On Linux and Mac, this is in your home directory. On Windows, this is in "My Documents".
+
+
+
+## Example
+
+As mentioned above, the package should be used with the two interactive REPL functions `rotp::otpdb()` and `rotp::auth()`. The one you will call when you need to log in to some website is `rotp::auth()`. But it won't work until you set up your key database:
+
+```r
+rotp::auth()
+## Error in rotp::auth() : 
+##   No keys stored in db! Add some by first running otpdb()
+```
+
+So lets add some (fake) keys. The first time you run it, you have to consent to the creation of a file (mentioned above). If you do not consent, then the package doesn't work. Sorry.
+
+```r
+rotp::otpdb()
+## To use the package, we need to create a persistent key database file. This file
+## will be located at the path "/home/mschmid3/.rotpdb".
+## 
+## To proceed, enter YES (all caps). Entering anything else will halt the
+## application.
+## 
+## Create db file? (YES/no): 
+```
+
+Once you agree (or if you agreed in the past and the file already exists), you will be greeted with the database REPL:
+
+```
+Choose an operation (Q/q to quit):
+  1 - List   2 - Add   3 - Delete   4 - Show   5 - Sort   6 - Reset   7 - Help 
+```
+
+Choose the number of the option you want. So you might choose "7" to see a quick description of the options. We're going to add a key, so we'll pick "2". Let's suppose that this belongs to our bank and that the private key (the one they give you when you're setting up 2-factor authentication) is "qwerty":
+
+```
+$ 2
+Enter a name for the key: My Bank
+Enter the key: ******
+```
+
+As you can see, password entry is masked. Let's add another key. This time it will be for a shady cryptocurrency exchange that is mere weeks away from stealing all of your money (secret key "asdf").
+
+```
+$ 2
+Enter a name for the key: A Shady Bitcoin Exchange
+Enter the key: ****
+```
+
+With that done, we can enter "q" to exit the key REPL. We never need to run that again unless we want to add more keys, delete keys, or the like. To authenticate with a website, we call `rotp::auth()`, which brings up the authenticator REPL:
+
+```
+Pick a key or enter Q/q to exit:
+  1 - My Bank
+  2 - A Shady Bitcoin Exchange 
+```
+
+Once you make your choice, you may be asked for a private key passphrase. This should only happen if your ssh key is password protected (and this is the password that it's asking for). If your ssh key is not password protected, then it will jump straight to the OTP bit. Here's an example of what it looks like:
+
+```
+Ctrl+c to exit
+ 613454 (22 seconds remaining [========----------------------])
+```
+
+The number of seconds will count down as the little progress bar fills up. That's basically it.
 
 
 
