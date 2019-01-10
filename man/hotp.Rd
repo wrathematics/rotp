@@ -9,7 +9,7 @@ hotp(key, counter, digits = 6)
 \arguments{
 \item{key}{The secret key.}
 
-\item{counter}{A "counter" (some integer).}
+\item{counter}{A "counter" (some non-negative integer).}
 
 \item{digits}{The number of digits of the return.}
 }

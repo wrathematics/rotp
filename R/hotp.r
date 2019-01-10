@@ -1,3 +1,4 @@
+#' @useDynLib rotp R_hotp
 hotp_wrapper = function(key, counter, digits=6L)
 {
   .Call(R_hotp, key, counter, digits)
@@ -12,7 +13,7 @@ hotp_wrapper = function(key, counter, digits=6L)
 #' @param key
 #' The secret key.
 #' @param counter
-#' A "counter" (some integer).
+#' A "counter" (some non-negative integer).
 #' @param digits
 #' The number of digits of the return.
 #' 
@@ -27,7 +28,7 @@ hotp_wrapper = function(key, counter, digits=6L)
 hotp = function(key, counter, digits=6)
 {
   check.is.string(key)
-  check.is.inty(counter)
+  check.is.natnum(counter)
   check.is.posint(digits)
   
   if (ndigits(digits) > 10)

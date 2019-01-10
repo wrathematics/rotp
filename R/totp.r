@@ -1,3 +1,4 @@
+#' @useDynLib rotp R_totp
 totp_wrapper = function(key, interval=30L, digits=6L)
 {
   .Call(R_totp, key, interval, digits)
