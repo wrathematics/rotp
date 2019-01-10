@@ -1,6 +1,6 @@
-CXX_STD = CXX11
+PKG_LIBS = -lssl -lcrypto
 
-CPPOTP_OBJS = libcppotp/bytes.o libcppotp/otp.o libcppotp/sha1.o
+CPPOTP_OBJS = oath/base32.o oath/hmac.o oath/totp.o
 R_OBJS = rotp_native.o otp.o
 
 

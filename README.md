@@ -4,11 +4,9 @@
 * **URL**: https://github.com/wrathematics/rotp
 * **Status:** [![Build Status](https://travis-ci.org/wrathematics/rotp.png)](https://travis-ci.org/wrathematics/rotp)
 * **License:** [BSD 2-Clause](http://opensource.org/licenses/BSD-2-Clause)
-* **Author:** Drew Schmidt
+* **Author:** Drew Schmidt and Christian Heckendorf
 
 A [Time-based One-Time Password](https://en.wikipedia.org/wiki/Time-based_One-time_Password_algorithm) (TOTP) implementation similar in spirit to [Google Authenticator](https://en.wikipedia.org/wiki/Google_Authenticator).
-
-The hotp and totp implementations (directly accessible via `rotp::hotp()` and `rotp::totp()`) are interfaces to [cpptotp](https://github.com/RavuAlHemio/cpptotp).
 
 
 
