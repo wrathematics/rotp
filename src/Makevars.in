@@ -1,4 +1,5 @@
-PKG_LIBS = -lssl -lcrypto
+PKG_CFLAGS = @OPENSSL_INCLUDES@
+PKG_LIBS = @OPENSSL_LDFLAGS@ -lssl -lcrypto
 
 CPPOTP_OBJS = oath/base32.o oath/hmac.o oath/totp.o
 R_OBJS = rotp_native.o otp.o

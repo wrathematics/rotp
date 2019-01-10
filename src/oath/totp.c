@@ -1,16 +1,17 @@
-#include <arpa/inet.h>
 #include <stdlib.h>
 
-#if (defined(__gnu_linux__) || defined(__linux__) || defined(__linux) || defined(linux))
-#include <endian.h>
-#else
-//#if (defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__bsdi__) || defined(__DragonFly__))
-#include <sys/endian.h>
-#endif
-
-#include "hmac.h"
 #include "base32.h"
+#include "hmac.h"
 #include "oath.h"
+#include "os.h"
+
+#if OS_WINDOWS
+	#include <Winsock2.h>
+	#include "windows/endianness.h"
+#else
+	#include <arpa/inet.h>
+	#include "endianness.h"
+#endif
 
 static inline uint32_t code_trunc(uint8_t *md, size_t dlen, int digits){
 	int i;
@@ -34,7 +35,7 @@ static inline int otp(uint8_t *key, int keylen, unsigned int digits, uint64_t co
 	uint8_t *md;
 	size_t dlen;
 
-#if __BYTE_ORDER == __LITTLE_ENDIAN
+#if ENDIAN_ME == ENDIAN_LITTLE
 	counter = (((uint64_t)htonl(counter))<<32) + htonl(counter>>32);
 #endif
 

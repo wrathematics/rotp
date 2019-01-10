@@ -1,0 +1,14 @@
+// set during configuration; do not modify by hand
+
+#ifndef ENDIANNESS_H_
+#define ENDIANNESS_H_
+
+
+#define ENDIAN_LITTLE 0
+#define ENDIAN_BIG 1
+
+// We assume during configure that byte order will be either big or little endian
+#define ENDIAN_ME @ENDIANNESS@
+
+
+#endif

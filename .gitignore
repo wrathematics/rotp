@@ -3,3 +3,6 @@
 
 *.o
 *.so
+
+src/Makevars
+src/oath/endianness.h

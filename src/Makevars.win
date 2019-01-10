@@ -1,0 +1,9 @@
+PKG_LIBS = -lssl -lcrypto -lws_32
+
+CPPOTP_OBJS = oath/base32.o oath/hmac.o oath/totp.o
+R_OBJS = rotp_native.o otp.o
+
+
+OBJECTS = $(R_OBJS) $(CPPOTP_OBJS)
+all: $(SHLIB)
+$(SHLIB): $(OBJECTS) 
