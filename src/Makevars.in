@@ -1,10 +1,9 @@
 PKG_CFLAGS = @OPENSSL_INCLUDES@
 PKG_LIBS = @OPENSSL_LDFLAGS@ -lssl -lcrypto
 
-CPPOTP_OBJS = oath/base32.o oath/hmac.o oath/totp.o
-R_OBJS = rotp_native.o otp.o
+OATH_OBJS = oath/base32.o oath/hmac.o oath/totp.o
+R_OBJS = otp.o rotp_native.o
+OBJECTS = $(R_OBJS) $(OATH_OBJS)
 
-
-OBJECTS = $(R_OBJS) $(CPPOTP_OBJS)
 all: $(SHLIB)
 $(SHLIB): $(OBJECTS) 

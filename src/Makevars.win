@@ -1,9 +1,14 @@
-PKG_LIBS = -lssl -lcrypto -lws_32
+OPENSSL_VERSION = 1.1.1
 
-CPPOTP_OBJS = oath/base32.o oath/hmac.o oath/totp.o
-R_OBJS = rotp_native.o otp.o
+PKG_CPPFLAGS = -I../windows/openssl-$(OPENSSL_VERSION)/include
+PKG_LIBS = -L../windows/openssl-$(OPENSSL_VERSION)/lib${R_ARCH} -lssl -lcrypto -lcrypt32 -lws2_32
 
+OATH_OBJS = oath/base32.o oath/hmac.o oath/totp.o
+R_OBJS = otp.o rotp_native.o
+OBJECTS = $(R_OBJS) $(OATH_OBJS)
 
-OBJECTS = $(R_OBJS) $(CPPOTP_OBJS)
-all: $(SHLIB)
-$(SHLIB): $(OBJECTS) 
+all: get_winlib $(SHLIB)
+$(SHLIB): $(OBJECTS) get_winlib
+
+get_winlib:
+	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" "../tools/get_winlib.R" $(OPENSSL_VERSION)
