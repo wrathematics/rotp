@@ -14,6 +14,7 @@ Imports:
     openssl (>= 0.9.7),
     utils
 ByteCompile: yes
+SystemRequirements: OpenSSL
 Authors@R: c(
     person("Drew", "Schmidt", email="wrathematics@gmail.com", role=c("aut", "cre")),
     person("Christian", "Heckendorf", role="aut"))
