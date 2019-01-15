@@ -108,7 +108,7 @@ check.has.pubkey = function()
 {
   pubkey_test = tryCatch(openssl::my_pubkey(), error=identity)
   if (inherits(pubkey_test, "simpleError"))
-    stop("no valid ")
+    stop("no valid ssh key found")
   
   invisible(TRUE)
 }
