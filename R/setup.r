@@ -32,3 +32,23 @@ setup_keys = function()
   
   TRUE
 }
+
+
+
+setup = function()
+{
+  cat("Setting up RSA keys...")
+  check = setup_keys()
+  if (check)
+    cat("done!\n")
+  else
+    cat("keys already exist; skipping\n")
+  
+  
+  cat("Setting up otp key database...")
+  check = otpdb_init()
+  if (check)
+    cat("done!\n")
+  else
+    cat("key database already exists; skipping\n")
+}
