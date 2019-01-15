@@ -25,3 +25,25 @@ progress_bar = function(rem, chars=30L, interval=30L)
     collapse=""
   )
 }
+
+
+
+get_os = function()
+{
+  os = tolower(Sys.info()["sysname"])
+  names(os) = NULL
+  
+  os
+}
+
+
+
+get_home_path = function()
+{
+  os = get_os()
+  
+  if (os == "windows")
+    Sys.getenv("USERPROFILE")
+  else
+    "~/"
+}
