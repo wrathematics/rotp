@@ -1,6 +1,7 @@
 db_path = function()
 {
-  "~/.rotpdb"
+  home_path = get_home_path()
+  paste0(home_path, ".rotpdb")
 }
 
 
