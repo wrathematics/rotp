@@ -4,7 +4,7 @@ PKG_CPPFLAGS = -I../windows/openssl-$(OPENSSL_VERSION)/include
 PKG_LIBS = -L../windows/openssl-$(OPENSSL_VERSION)/lib${R_ARCH} -lssl -lcrypto -lcrypt32 -lws2_32
 
 OATH_OBJS = oath/base32.o oath/hmac.o oath/totp.o
-R_OBJS = otp.o rotp_native.o
+R_OBJS = rsa_keys.o otp.o rotp_native.o
 OBJECTS = $(R_OBJS) $(OATH_OBJS)
 
 all: get_winlib $(SHLIB)
