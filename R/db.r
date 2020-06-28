@@ -60,13 +60,13 @@ db_write = function(data, overwrite=FALSE)
 
 db_encode = function(name, encrypted_key)
 {
-  name_enc = serialize(name, NULL)
-  encrypted_key_enc = serialize(encrypted_key, NULL)
+  name_enc = val_to_raw(name)
+  encrypted_key_enc = val_to_raw(encrypted_key)
   
   c(
-    serialize(length(name_enc), NULL),
+    val_to_raw(length(name_enc)),
     name_enc,
-    serialize(length(encrypted_key_enc), NULL),
+    val_to_raw(length(encrypted_key_enc)),
     encrypted_key_enc
   )
 }
@@ -78,13 +78,13 @@ db_decode = function(data, start)
   DIGIT_LENGTH = 26L
   
   offset = start+DIGIT_LENGTH
-  name_len = unserialize(data[start:(offset - 1L)])
-  name = unserialize(data[(offset):(offset + name_len - 1L)])
+  name_len = raw_to_val(data, start, offset-1L)
+  name = raw_to_val(data, offset, offset + name_len - 1L)
   
   offset = offset + name_len
-  encrypted_key_len = unserialize(data[offset:(offset + DIGIT_LENGTH - 1L)])
+  encrypted_key_len = raw_to_val(data, offset, offset + DIGIT_LENGTH - 1L)
   last = offset + DIGIT_LENGTH + encrypted_key_len - 1L
-  encrypted_key = unserialize(data[(offset+DIGIT_LENGTH):last])
+  encrypted_key = raw_to_val(data, offset+DIGIT_LENGTH, last)
   
   list(name=name, encrypted_key=encrypted_key, last=last)
 }
